@@ -22,7 +22,7 @@ const loadImg = async () => {
     });
 };
 
-const {Engine, Render, Runner, Bodies, Composite} = Matter.Engine;
+const {Engine, Render, Runner, Bodies, Composite} = Matter;
 
 const engine = Engine.create();
 const render = Render.create({
