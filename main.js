@@ -39,15 +39,21 @@ const rgba2s = (r, g, b, a) => `#${[r, g, b].map(e => (e || 0).toString(16).padS
 const putImage = (img) => {
     // create two boxes and a ground
     const boxes = [];
+    const opts = {
+        density: 1,
+        restitution: 0,
+        friction: 100,
+        timeScale: 0.3,
+    };
     for(let i=0; i<img.height; i+=5) {
         for(let j=0; j<img.width; j+=5) {
             const [r, g, b, a] = img.data.slice(4*(img.width*i + j), 4*(img.width*i + j) + 4);
             if(r === 0xFF && g === 0xFF && b === 0xFF) continue;
-            const box = Bodies.rectangle(j, i, 7, 7, { render: { fillStyle: rgba2s(r, g, b, a), } });
+            const box = Bodies.circle(j, i, 3, { render: { fillStyle: rgba2s(r, g, b, a), }, ...opts });
             boxes.push(box);
         }
     }
-    const ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true, render: {fillStyle: 'orange'}, });
+    const ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true, render: {fillStyle: 'orange'}, restitution: 0 });
 
     Composite.add(engine.world, [...boxes, ground]);
 
